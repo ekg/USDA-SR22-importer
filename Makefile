@@ -7,7 +7,7 @@ data: data/sr22db.ZIP
 database: data createdb.sh
 	./createdb.sh
 
-all: database
+sr22: database
 	echo creating database!
 
 clean:
