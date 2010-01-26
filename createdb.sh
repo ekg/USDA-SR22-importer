@@ -8,7 +8,7 @@ SR22=data/sr22.mdb # data from the USDA in m$ access format
 MYSQLUSER=youruser
 MYSQLPASS=yourpass
 MYSQLDB=ndb
-MYSQLCONN="mysql -u $MYSQLUSER --password=$MYSQLPASS $SR22DB"
+MYSQLCONN="mysql -u $MYSQLUSER --password=$MYSQLPASS $MYSQLDB"
 TABLES=`mdb-tables $SR22` # a list of tables in our input
 
 # create the database if it doesn't exist
@@ -18,7 +18,7 @@ echo "CREATE DATABASE $MYSQLDB IF NOT EXISTS;" | $MYSQLCONN
 
 # put the schema into the database
 
-echo creating schema in $SR22DB
+echo creating schema in $MYSQLDB
 #mdb-schema $SR22 | $MYSQLCONN
 # The above should work, but the schema requires manual tweaking.
 # The schema that mdb-schema produces from the sr22 access database does not
@@ -26,11 +26,11 @@ echo creating schema in $SR22DB
 # Instead we use this hand-edited schema:
 $MYSQLCONN <sr22.sql
 
-echo adding tables to $SR22DB
+echo adding tables to $MYSQLDB
 for table in $TABLES
 do
     echo adding $table
     mdb-export -I $SR22 $table | sed -e 's/)$/)\;/' -e 's/+Zea/_Zea/' | $MYSQLCONN
 done
 
-echo done!
+echo done
