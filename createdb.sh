@@ -30,7 +30,9 @@ echo adding tables to $MYSQLDB
 for table in $TABLES
 do
     echo adding $table
-    mdb-export -I mysql $SR22 $table | sed -e 's/)$/)\;/' -e 's/+Zea/_Zea/' | $MYSQLCONN
+    mdb-export -H $SR22 $table > $table.sql
+        mysqlimport -L -u $MYSQLUSER --password=$MYSQLPASS --fields-terminated-by="," --fields-enclosed-by="\"" $MYSQLDB $table.sql
+        rm $table.sql
 done
 
 echo done
