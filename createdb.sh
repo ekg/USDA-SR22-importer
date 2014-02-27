@@ -14,7 +14,7 @@ TABLES=`mdb-tables $SR22` # a list of tables in our input
 # create the database if it doesn't exist
 
 echo creating database $MYSQLDB
-echo "CREATE DATABASE $MYSQLDB IF NOT EXISTS;" | $MYSQLCONN || exit 1
+echo "CREATE DATABASE IF NOT EXISTS $MYSQLDB;" | $MYSQLCONN || exit 1
 
 # put the schema into the database
 
