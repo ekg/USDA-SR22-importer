@@ -14,7 +14,7 @@ TABLES=`mdb-tables $SR22` # a list of tables in our input
 # create the database if it doesn't exist
 
 echo creating database $MYSQLDB
-echo "CREATE DATABASE $MYSQLDB IF NOT EXISTS;" | $MYSQLCONN
+echo "CREATE DATABASE IF NOT EXISTS $MYSQLDB;" | $MYSQLCONN || exit 1
 
 # put the schema into the database
 
@@ -30,7 +30,9 @@ echo adding tables to $MYSQLDB
 for table in $TABLES
 do
     echo adding $table
-    mdb-export -I $SR22 $table | sed -e 's/)$/)\;/' -e 's/+Zea/_Zea/' | $MYSQLCONN
+    mdb-export -H $SR22 $table > $table.sql
+        mysqlimport -L -u $MYSQLUSER --password=$MYSQLPASS --fields-terminated-by="," --fields-enclosed-by="\"" $MYSQLDB $table.sql
+        rm $table.sql
 done
 
 echo done
