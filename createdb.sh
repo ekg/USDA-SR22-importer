@@ -30,7 +30,7 @@ echo adding tables to $MYSQLDB
 for table in $TABLES
 do
     echo adding $table
-    mdb-export -I $SR22 $table | sed -e 's/)$/)\;/' -e 's/+Zea/_Zea/' | $MYSQLCONN
+    mdb-export -I mysql $SR22 $table | sed -e 's/)$/)\;/' -e 's/+Zea/_Zea/' | $MYSQLCONN
 done
 
 echo done
