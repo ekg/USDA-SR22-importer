@@ -11,14 +11,18 @@ MYSQLDB=ndb
 MYSQLCONN="mysql -u $MYSQLUSER --password=$MYSQLPASS $MYSQLDB"
 MDB=data/sr${VER}.mdb # data from the USDA in m$ access format
 
-# Downloading SR database.
+# If we already ahve MDB file, do nothing.
 if [[ -f data/sr${VER}.mdb ]]
 then
-	continue
+	# do nothing
+
+# If we have the ZIP file, extract MDB.
 elif [[ -f data/sr${VER}db.zip ]]
 then
 	unzip data/sr${VER}db.zip sr${VER}.mdb
 	mv sr${VER}.mdb data/
+
+# Otherwise, download ZIP and extract MDB.
 else
 	wget http://www.ars.usda.gov/SP2UserFiles/Place/12354500/Data/SR${VER}/dnload/sr${VER}db.zip || exit 1
 	mv sr${VER}db.zip data/
