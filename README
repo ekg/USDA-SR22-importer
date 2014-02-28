@@ -4,14 +4,14 @@ information produced by the USDA.
 You must first create a new user and database, make sure that these are
 referred to in createdb.sh.
 
-Then make sure you have a recent copy of mdb-tools.  These tools are used to
+Then make sure you have a recent copy of mdbtools.  These tools are used to
 convert the sr22 data from access format into SQL.
 
-Edit create_db.sh to reflect your local MySQL installation, user, password, and
-database.
+Edit createdb.sh to reflect your local MySQL installation: user, password, and
+database.  Also set the version number of the SR database you wish to use.
 
 Then:
 
-    make sr22
+    ./createdb.sh
 
-This should insert all the data into your mysql database!
+This should download and insert all the data into your mysql database!

@@ -141,7 +141,7 @@ CREATE TABLE ABBREV
 	Beta_Carot			DOUBLE, 
 	Beta_Crypt			DOUBLE, 
 	Lycopene			DOUBLE, 
-	Lut_Zea			DOUBLE,  -- this was Lut+Zea
+	`Lut+Zea`		DOUBLE,  -- this was Lut+Zea
 	Vit_E			DOUBLE, 
 	Vit_D_mcg			DOUBLE, 
 	ViVit_D_IU			DOUBLE, 
