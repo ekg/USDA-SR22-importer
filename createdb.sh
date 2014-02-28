@@ -29,10 +29,8 @@ $MYSQLCONN <sr22.sql
 echo adding tables to $MYSQLDB
 for table in $TABLES
 do
-    echo adding $table
-    mdb-export -H $SR22 $table > $table.sql
-        mysqlimport -L -u $MYSQLUSER --password=$MYSQLPASS --fields-terminated-by="," --fields-enclosed-by="\"" $MYSQLDB $table.sql
-        rm $table.sql
+	echo adding $table
+	mdb-export -I mysql $SR22 $table | sed '1i BEGIN;' | sed '$ a COMMIT;' | $MYSQLCONN
 done
 
 echo done
