@@ -48,9 +48,7 @@ echo adding tables to $MYSQLDB
 for table in $TABLES
 do
 	echo adding $table
-	mdb-export -H $MDB $table > $table.sql
-	mysqlimport -L -u $MYSQLUSER --password=$MYSQLPASS --fields-terminated-by="," --fields-optionally-enclosed-by="\"" $MYSQLDB $table.sql
-	rm $table.sql
+	mdb-export -I mysql $MDB $table | sed '1i BEGIN;' | sed '$ a COMMIT;' | $MYSQLCONN
 done
 
 echo done
