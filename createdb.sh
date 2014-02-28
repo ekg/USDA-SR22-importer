@@ -4,7 +4,7 @@
 #  (http://www.ars.usda.gov/Services/docs.htm?docid=18879)
 # draws heavily on http://blog.moybella.net/2007/03/10/converting-microsoft-access-mdb-into-csv-or-mysql-in-linux/
 
-VER=22
+VER=26
 MYSQLUSER=youruser
 MYSQLPASS=yourpass
 MYSQLDB=ndb
@@ -15,6 +15,7 @@ MDB=data/sr${VER}.mdb # data from the USDA in m$ access format
 if [[ -f data/sr${VER}.mdb ]]
 then
 	# do nothing
+	true
 
 # If we have the ZIP file, extract MDB.
 elif [[ -f data/sr${VER}db.zip ]]
@@ -48,7 +49,7 @@ for table in $TABLES
 do
 	echo adding $table
 	mdb-export -H $MDB $table > $table.sql
-	mysqlimport -L -u $MYSQLUSER --password=$MYSQLPASS --fields-terminated-by="," --fields-enclosed-by="\"" $MYSQLDB $table.sql
+	mysqlimport -L -u $MYSQLUSER --password=$MYSQLPASS --fields-terminated-by="," --fields-optionally-enclosed-by="\"" $MYSQLDB $table.sql
 	rm $table.sql
 done
 
